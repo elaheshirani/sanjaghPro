@@ -14,7 +14,8 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th >Action</th>
+                <th>Created At</th>
+                <th colspan="2">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -23,6 +24,7 @@
                     <td>{{$user['_id']}}</td>
                     <td>{{$user['name']}}</td>
                     <td>{{$user['email']}}</td>
+                    <td>{{date('Y-m-d H:i:s', strtotime($user['created_at']['date']))}}</td>
                     <td>
                         <a href="{{route('user.show',[$user['_id']])}}" class="btn btn-warning">Show</a>
                     </td>
@@ -35,7 +37,18 @@
                     </td>
                 </tr>
             @endforeach
+
             </tbody>
         </table>
+        @if($page > 1)
+            <a href="?page={{$prev}}" class="btn btn-secondary mr-2" >Previous</a>
+            @if($page * $limit < 100)
+                <a href="?page={{$next}}" class="btn btn-secondary ml-2">Next</a>
+            @endif
+        @else
+            @if($page * $limit < 100)
+                <a href="?page={{$next}}" class="btn btn-secondary">Next</a>
+            @endif
+        @endif
     </div>
 @endsection

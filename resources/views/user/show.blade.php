@@ -18,6 +18,13 @@
                     <label for="UserEmail">Email :</label>
                     {{$user['email']}}
                 </li>
+                <li class="list-group-item">
+                    <label for="UserEmail">Created At :</label>
+                    {{date('Y-m-d H:i:s', strtotime($user['created_at']['date']))}}
+                </li>
+                <li class="list-group-item">
+                    <a href="{{route('users')}}" class="btn btn-primary">Back</a>
+                </li>
             </ul>
         </div>
     </div>

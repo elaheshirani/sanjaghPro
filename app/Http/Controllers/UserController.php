@@ -20,8 +20,18 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = $this->collection->find();
-        return view('user.index', compact('users'));
+        $page  = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+        $limit = 10;
+        $next  = ($page + 1);
+        $prev  = ($page - 1);
+        $users = $this->collection->find(
+            [],
+            [
+            'skip'=> ($page - 1) * $limit,
+            'limit'=> $limit,
+            'sort' => ['created_at' => -1],
+        ]);
+        return view('user.index', compact('users','page','limit','next','prev'));
     }
 
     public function destroy($id)

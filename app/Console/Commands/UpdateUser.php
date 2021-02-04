@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use MongoDB\BSON\ObjectId;
+use MongoDB\Client;
 
 class UpdateUser extends Command
 {
@@ -38,10 +39,12 @@ class UpdateUser extends Command
      */
     public function handle()
     {
-        $collection = (new \MongoDB\Client)->test->users;
+        $db = env('MONGO_DB_DATABASE');
+        $collection = (new Client())->$db->users;
         $updateResult = $collection->updateOne(
-            ['_id' => ObjectId($this->argument('id'))],
+            ['_id' => new ObjectId($this->argument('id'))],
             ['$set' => ['name' => $this->argument('name')]]
         );
+        $this->line("User updated successfully.");
     }
 }
