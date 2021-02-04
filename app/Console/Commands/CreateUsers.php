@@ -41,9 +41,9 @@ class CreateUsers extends Command
     {
         $faker = Factory::create();
         $limit = 100;
+        $collection = (new \MongoDB\Client)->sanjaghPro->users;
         for ($i = 0; $i < $limit; $i++) {
-            $db = (new \MongoDB\Client)->sanjaghPro->users;
-            $collection = $db->insertOne([
+            $insertResult = $collection->insertOne([
                 'name' => $faker->name,
                 'email' => $faker->unique()->email,
                 'password' => $faker->password(10),

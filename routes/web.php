@@ -20,3 +20,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::prefix('/user')->group(function () {
+    Route::get('/',[\App\Http\Controllers\UserController::class, 'index']);
+    Route::delete('/{id}',[\App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
+    Route::get('/{id}',[\App\Http\Controllers\UserController::class, 'show'])->name('user.show');
+});
